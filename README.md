@@ -5,6 +5,7 @@
 Give it your course materials and your exam date. It builds you a study plan, teaches you one topic at a time with diagrams and interactive visuals, quizzes you, and keeps track of how you're doing.
 
 > **Made for [claude.ai](https://claude.ai) (the chat side, using a Project).**
+> Works in your **browser** and in the **Claude desktop app**.
 > This is **not** a Claude Code tool. There's nothing to run in a terminal and no code to write. You just chat.
 
 ---
