@@ -10,9 +10,9 @@ Give it your course materials and your exam date. It builds you a study plan, te
 
 ## Demo
 
-[![Watch the 60-second demo](demo/poster.jpg)](demo/teach-me-everything-demo.mp4)
+![A 60-second demo of teach-me-everything: setting up from an exam date, a full lesson, a wrong answer saved to the sheet, and the next day's warm-up that goes straight back to it](demo/preview.gif)
 
-*Click to watch the 60-second demo: setting up from an exam date, a full lesson, a wrong answer, and the next day's warm-up that goes straight back to it (made with the [`/brag`](https://github.com/latent-spaces/brag) skill).*
+*A 60-second walkthrough: setting up from an exam date, a full lesson, a wrong answer, and the next day's warm-up that goes straight back to it. [Download the full video with sound (mp4)](https://github.com/Jograh/teach-me-everything/raw/main/demo/teach-me-everything-demo.mp4). Made with the [`/brag`](https://github.com/latent-spaces/brag) skill.*
 
 ---
 
