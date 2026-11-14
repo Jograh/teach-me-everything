@@ -1,15 +1,22 @@
-# course-tutor-setup
+# teach-me-everything
 
-A Claude skill that turns a university course into a personal tutoring system inside a claude.ai Project.
+**An AI course tutor built on Claude's native chat visuals: interactive diagrams, simulations and quiz cards, with Google Sheets progress tracking and spaced review. Its learning methods are inspired by Matt Pocock's `/teach` skill.**
 
-Give it your syllabus and lesson files, and it sets up:
+## Why it's different
+
+- **Visual, inside the chat.** Lessons use Claude's built-in Visualizer: diagrams, interactive simulations with sliders and toggles, quiz cards and flashcards. There are no HTML files to open and nothing else to install.
+- **Real progress tracking.** A Google Sheet records every topic, score and review date. A dashboard shows your pace, days to the final and what's due.
+- **Learning methods that work.** Retrieval practice, spaced repetition, interleaving and no skipped checks, adapted from Matt Pocock's `/teach` skill.
+- **Accountability.** Optional scheduled check-ins tell you whether you're on pace and build a catch-up plan when you're not.
+
+## What it sets up
+
+Give it your syllabus and lesson files, and this Claude skill (`course-tutor-setup`) builds:
 
 - **A tutor** that teaches only from your course materials, one topic at a time, with inline diagrams, interactive simulations and quizzes. It never skips the comprehension check.
 - **A Google Sheet progress tracker** with a dashboard (pace, days to the final, topics due for review), lessons, topics with spaced-repetition review dates, a session log and grade tracking.
 - **A Google Drive folder** for lesson notes and reference docs (glossary, cheat sheet, final review).
 - **Optional check-ins** on a schedule, e.g. Mon/Wed/Sat mornings. Each one reads your sheet, tells you whether you're on pace, and gives you a day-by-day catch-up plan when you're behind.
-
-The teaching loop is adapted from Matt Pocock's `/teach` skill: mission first, trusted sources only, small steps, retrieval practice, spacing and interleaving.
 
 ## How a session works
 
@@ -37,8 +44,8 @@ Other commands: `quiz me`, `review`, `catch-up`.
 **Claude Code:**
 
 ```bash
-git clone https://github.com/Jograh/course-tutor-setup.git
-cp -r course-tutor-setup/skills/course-tutor-setup ~/.claude/skills/
+git clone https://github.com/Jograh/teach-me-everything.git
+cp -r teach-me-everything/skills/course-tutor-setup ~/.claude/skills/
 ```
 
 ## Use
