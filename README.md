@@ -5,6 +5,7 @@
 Give it your course materials and your exam date. It builds you a study plan, teaches you one topic at a time with diagrams and interactive visuals, quizzes you, and keeps track of how you're doing.
 
 > **Made for [claude.ai](https://claude.ai) (the chat side, using a Project).**
+> Works in your **browser** and in the **Claude desktop app**. The desktop app is recommended: it can read course folders straight from your computer.
 > This is **not** a Claude Code tool. There's nothing to run in a terminal and no code to write. You just chat.
 
 ---
@@ -15,7 +16,7 @@ Give it your course materials and your exam date. It builds you a study plan, te
 - **Lessons you can see and play with.** Diagrams, sliders you can drag, quiz cards and flashcards, all right inside the chat. Nothing to download or open.
 - **Teaching that sticks.** It teaches one topic at a time, quizzes you, and brings old topics back for review right before you'd forget them.
 - **A progress tracker.** A Google Sheet keeps your scores, what's due for review, and whether you're on pace.
-- **Check-ins (optional).** Get a scheduled message a few mornings a week telling you if you're on track, and what to do if you're not.
+- **Check-ins (optional).** Get a scheduled message a few mornings a week telling you if you're on track, and what to do if you're not. Sign in to the Claude app on your phone and they arrive as notifications, which is the most convenient way to get them.
 
 It teaches only from *your* course materials (syllabus, slides, textbook), so you're studying what your class actually covers.
 
@@ -25,7 +26,8 @@ It teaches only from *your* course materials (syllabus, slides, textbook), so yo
 
 - A **claude.ai** account that has **Projects**
 - The **Google Drive** and **Google Sheets** connections turned on in Claude
-- Your course materials: a folder on your computer, files you attach to the chat, or files in Google Drive
+- Your course materials: files you attach to the chat, files in Google Drive, or (desktop app only) a folder on your computer
+- Optional: the Claude app on your phone, to get check-ins as notifications
 
 ---
 
