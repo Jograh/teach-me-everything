@@ -1,80 +1,81 @@
 # teach-me-everything
 
-**An AI course tutor built on Claude's native chat visuals: interactive diagrams, simulations and quiz cards, with Google Sheets progress tracking and spaced review. Its learning methods are inspired by Matt Pocock's `/teach` skill.**
+**Turn Claude into a personal tutor for any class you're taking.**
 
-## Why it's different
+Give it your course materials and your exam date. It builds you a study plan, teaches you one topic at a time with diagrams and interactive visuals, quizzes you, and keeps track of how you're doing.
 
-- **A study plan built around your goal.** Tell it your exam dates and target grade, and you decide the timeline: it works backward from the date into a day-by-day plan, with blackout periods like other finals. Built for students with a deadline.
-- **Visual, inside the chat.** Lessons use Claude's built-in Visualizer: diagrams, interactive simulations with sliders and toggles, quiz cards and flashcards. There are no HTML files to open and nothing else to install.
-- **Real progress tracking.** A Google Sheet records every topic, score and review date. A dashboard shows your pace, days to the final and what's due.
-- **Learning methods that work.** Retrieval practice, spaced repetition, interleaving and no skipped checks, adapted from Matt Pocock's `/teach` skill.
-- **Accountability.** Optional scheduled check-ins tell you whether you're on pace and build a catch-up plan when you're not.
+> **Made for [claude.ai](https://claude.ai) (the chat side, using a Project).**
+> This is **not** a Claude Code tool. There's nothing to run in a terminal and no code to write. You just chat.
 
-## What it sets up
+---
 
-Give it your syllabus and lesson files, and this Claude skill (`course-tutor-setup`) builds:
+## What you get
 
-- **A tutor** that teaches only from your course materials, one topic at a time, with inline diagrams, interactive simulations and quizzes. It never skips the comprehension check.
-- **A study timeline you control.** Set the final date, quiz dates and target grade, or bring an existing plan (PDF, calendar, list). It schedules lessons backward from your exam and rebuilds the plan when you fall behind.
-- **A Google Sheet progress tracker** with a dashboard (pace, days to the final, topics due for review), lessons, topics with spaced-repetition review dates, a session log and grade tracking.
-- **A Google Drive folder** for lesson notes and reference docs (glossary, cheat sheet, final review).
-- **Optional check-ins** on a schedule, e.g. Mon/Wed/Sat mornings. Each one reads your sheet, tells you whether you're on pace, and gives you a day-by-day catch-up plan when you're behind.
+- **A study plan built around your exam date.** Tell it when your final is and what grade you're aiming for. It works backward and gives you a day-by-day plan. It rebuilds the plan if you fall behind.
+- **Lessons you can see and play with.** Diagrams, sliders you can drag, quiz cards and flashcards, all right inside the chat. Nothing to download or open.
+- **Teaching that sticks.** It teaches one topic at a time, quizzes you, and brings old topics back for review right before you'd forget them.
+- **A progress tracker.** A Google Sheet keeps your scores, what's due for review, and whether you're on pace.
+- **Check-ins (optional).** Get a scheduled message a few mornings a week telling you if you're on track, and what to do if you're not.
 
-## How a session works
+It teaches only from *your* course materials (syllabus, slides, textbook), so you're studying what your class actually covers.
 
-```
-"next lesson"
-  → pace check (dashboard)
-  → warm-up: 3–5 review questions on due topics
-  → per topic: hook → short lesson + visual → MCQs + explain-it check
-  → log scores to the sheet → spaced review date updates itself
-```
+---
 
-Other commands: `quiz me`, `review`, `catch-up`.
+## What you need
 
-## Requirements
+- A **claude.ai** account that has **Projects**
+- The **Google Drive** and **Google Sheets** connections turned on in Claude
+- Your course materials: a folder on your computer, files you attach to the chat, or files in Google Drive
 
-- claude.ai with **Projects** (one Project per course)
-- **Google Drive** and **Google Sheets** connectors
-- Course materials Claude can reach: a folder on your computer linked through the Claude desktop app, files attached to the chat, or files in Drive
-- Optional: scheduled tasks, for the check-ins
+---
 
-## Install
+## Setup
 
-**claude.ai:** download [`skills/course-tutor-setup/SKILL.md`](skills/course-tutor-setup/SKILL.md), zip the `course-tutor-setup` folder, then upload it under **Settings → Capabilities → Skills**.
+### The easy way (recommended): just ask Claude
 
-**Claude Code:**
+1. In claude.ai, create a **Project** for your class (for example, "MATH 204").
+2. Start a chat inside that Project and paste this:
 
-```bash
-git clone https://github.com/Jograh/teach-me-everything.git
-cp -r teach-me-everything/skills/course-tutor-setup ~/.claude/skills/
-```
+   > Set up a course tutor for this class using this: https://github.com/Jograh/teach-me-everything
 
-## Use
+3. Claude reads the instructions from the link, asks you a few questions (exam dates, target grade, how often you want check-ins), and shows you the plan.
+4. Say go ahead. Claude builds everything for you.
 
-1. Create a claude.ai Project for the course (e.g. "MATH 204").
-2. In a chat inside that Project, say: **"Set up a course tutor for this class"** and point it at your course materials.
-3. Answer the intake questions: exam dates, timeline, target grade, check-in days. This is where you dictate the study plan.
-4. Review the plan it shows you, then approve it.
-5. Paste the one line it gives you into the Project's custom instructions.
-6. Start studying with **"next lesson"**.
+That's it. You don't need to download or install anything.
 
-## What gets created
+### The manual way: add it as a Claude skill
 
-| Where | What |
+If you'd rather have it permanently available in your account:
+
+1. Download [`skills/course-tutor-setup/SKILL.md`](skills/course-tutor-setup/SKILL.md) from this page.
+2. Put it in a folder named `course-tutor-setup` and zip that folder.
+3. In claude.ai, go to **Settings → Capabilities → Skills** and upload the zip.
+4. Create a Project for your class, then say: **"Set up a course tutor for this class."**
+
+---
+
+## Using it
+
+Once setup is done, open your class's Project and just say what you want:
+
+| Say this | What happens |
 |---|---|
-| Project docs | `TEACHING-METHOD.md`, `MISSION.md`, `COURSE-MAP.md`, `NOTES.md`, `VISUAL-KIT.md` |
-| Google Drive | `<Course>/Lesson Notes/`, `<Course>/Reference/`, `<COURSE> Progress` sheet |
-| Sheet tabs | Dashboard · Timeline · Lessons · Topics · Session Log · Check-ins · Assessments |
-| Scheduled task | `<COURSE> check-in` (optional) |
+| **"next lesson"** | Checks your pace, quizzes you on older topics, then teaches the next lesson |
+| **"quiz me"** | A mixed quiz on what's due and what you're weakest at |
+| **"review"** | Brings back topics that are due for review |
+| **"catch-up"** | A shorter, faster path through lessons you've missed |
 
-## Customizing
+A typical session: quick warm-up questions, then each topic gets a short lesson with a visual, a few quiz questions and an "explain it in your own words" check. Your scores are saved automatically.
 
-All the behaviour lives in `SKILL.md`. Common tweaks:
+---
 
-- **Review intervals:** the `CHOOSE(...,1,3,7,14)` formula in the Topics tab (days until the next review)
-- **Mastery thresholds:** 70% / 90% in the logging rules
-- **Check-in format:** the prompt template in Phase 5
+## Want the technical details?
+
+How it works under the hood, what gets created, and how to customize it are in [TECHNICAL.md](TECHNICAL.md).
+
+## Credit
+
+The teaching methods are inspired by Matt Pocock's `/teach` skill.
 
 ## License
 
