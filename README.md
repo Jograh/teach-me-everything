@@ -4,6 +4,7 @@
 
 ## Why it's different
 
+- **A study plan built around your goal.** Tell it your exam dates and target grade, and you decide the timeline: it works backward from the date into a day-by-day plan, with blackout periods like other finals. Built for students with a deadline.
 - **Visual, inside the chat.** Lessons use Claude's built-in Visualizer: diagrams, interactive simulations with sliders and toggles, quiz cards and flashcards. There are no HTML files to open and nothing else to install.
 - **Real progress tracking.** A Google Sheet records every topic, score and review date. A dashboard shows your pace, days to the final and what's due.
 - **Learning methods that work.** Retrieval practice, spaced repetition, interleaving and no skipped checks, adapted from Matt Pocock's `/teach` skill.
@@ -14,6 +15,7 @@
 Give it your syllabus and lesson files, and this Claude skill (`course-tutor-setup`) builds:
 
 - **A tutor** that teaches only from your course materials, one topic at a time, with inline diagrams, interactive simulations and quizzes. It never skips the comprehension check.
+- **A study timeline you control.** Set the final date, quiz dates and target grade, or bring an existing plan (PDF, calendar, list). It schedules lessons backward from your exam and rebuilds the plan when you fall behind.
 - **A Google Sheet progress tracker** with a dashboard (pace, days to the final, topics due for review), lessons, topics with spaced-repetition review dates, a session log and grade tracking.
 - **A Google Drive folder** for lesson notes and reference docs (glossary, cheat sheet, final review).
 - **Optional check-ins** on a schedule, e.g. Mon/Wed/Sat mornings. Each one reads your sheet, tells you whether you're on pace, and gives you a day-by-day catch-up plan when you're behind.
@@ -52,7 +54,7 @@ cp -r teach-me-everything/skills/course-tutor-setup ~/.claude/skills/
 
 1. Create a claude.ai Project for the course (e.g. "MATH 204").
 2. In a chat inside that Project, say: **"Set up a course tutor for this class"** and point it at your course materials.
-3. Answer the intake questions: exam dates, timeline, target grade, check-in days.
+3. Answer the intake questions: exam dates, timeline, target grade, check-in days. This is where you dictate the study plan.
 4. Review the plan it shows you, then approve it.
 5. Paste the one line it gives you into the Project's custom instructions.
 6. Start studying with **"next lesson"**.
