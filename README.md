@@ -8,6 +8,12 @@ Give it your course materials and your exam date. It builds you a study plan, te
 > Works in your **browser** and in the **Claude desktop app**. The desktop app is recommended: it can read course folders straight from your computer.
 > This is **not** a Claude Code tool. There's nothing to run in a terminal and no code to write. You just chat.
 
+## Demo
+
+[![Watch the 60-second demo](demo/poster.jpg)](demo/teach-me-everything-demo.mp4)
+
+*Click to watch the 60-second demo: setting up from an exam date, a full lesson, a wrong answer, and the next day's warm-up that goes straight back to it (made with the [`/brag`](https://github.com/latent-spaces/brag) skill).*
+
 ---
 
 ## What you get
@@ -15,6 +21,7 @@ Give it your course materials and your exam date. It builds you a study plan, te
 - **A study plan built around your exam date.** Tell it when your final is and what grade you're aiming for. It works backward and gives you a day-by-day plan. It rebuilds the plan if you fall behind.
 - **Lessons you can see and play with.** Diagrams, sliders you can drag, quiz cards and flashcards, all right inside the chat. Nothing to download or open.
 - **Teaching that sticks.** It teaches one topic at a time, quizzes you, and brings old topics back for review right before you'd forget them.
+- **It remembers what you struggle with.** Every mistake gets saved: your score, a note about what you mixed up, and a log of the session. Anything you scored low on comes back the next day, and your next warm-up goes straight at what you got wrong.
 - **A progress tracker.** A Google Sheet keeps your scores, what's due for review, and whether you're on pace.
 - **Check-ins (optional).** Get a scheduled message a few mornings a week telling you if you're on track, and what to do if you're not. Sign in to the Claude app on your phone and they arrive as notifications, which is the most convenient way to get them.
 
@@ -82,3 +89,5 @@ The teaching methods are inspired by Matt Pocock's `/teach` skill.
 ## License
 
 MIT
+
+The demo video in `demo/` uses the track "Happy Beats / Business Moves Vol. 1" by Sascha Ende ([ende.app](https://ende.app/en), [CC BY 4.0](https://ende.app/en/standard-license)) and CC0 sound effects from [Kenney](https://kenney.nl/). The music is not covered by the MIT license.
