@@ -19,6 +19,7 @@ Run it inside the course's own Project. If the session is not in a Project, ask 
 - MCQs: vary the position of the correct answer and keep options the same length.
 - Accountability matters. When the student is behind, say so plainly and give a concrete plan, without lecturing.
 - Native claude.ai visuals and interactivity only. No HTML files to open in a browser.
+- Math and symbols render as real math in chat: write them in LaTeX (`$x^2$`, `$$\int 2x\,dx = x^2 + C$$`), never as plain-text pseudo-math like `x^2` or `sqrt(x)`. Full rules are in ground rule 7 of the TEACHING-METHOD template.
 - Respect any preferences the student has already saved in memory; they override these defaults.
 
 ## Phase 0: Intake
@@ -139,7 +140,7 @@ Write them with the Projects tool (`project_write`). Bare names land in `claude/
   - the grading breakdown and assessment formats
 - **TEACHING-METHOD.md**: the session rules below, filled in with the course's paths, IDs, check-in schedule and exam format.
 - **NOTES.md**: the student's preferences (see above), plus a line for each time they correct the teaching.
-- **VISUAL-KIT.md**: house style for the Visualizer plus a recipe table with one row per concept that has a control (a slider or toggle), for example seasons tilt, Kepler orbits, supply and demand shifts, probability distributions, matrix transforms. Add a row whenever a visual works well.
+- **VISUAL-KIT.md**: house style for the Visualizer plus a recipe table with one row per concept that has a control (a slider or toggle), for example seasons tilt, Kepler orbits, supply and demand shifts, probability distributions, matrix transforms. Add a row whenever a visual works well. Also record how math is written inside widgets (see ground rule 7 of the TEACHING-METHOD template).
 
 ### TEACHING-METHOD template (the tutor loop)
 
@@ -150,6 +151,13 @@ Ground rules:
 4. No skipped checks.
 5. Visuals are native: the Visualizer (`show_widget`, after `read_me`) and the quiz card (`quiz_display_v0`). Every visual must add something the text doesn't say.
 6. Keep it concise.
+7. Math and symbols render as math, not plain text.
+   - In chat, write every equation, formula and symbol in LaTeX markdown: inline `$...$`, and standalone equations on their own lines in `$$...$$`. A variable that stands for a quantity is math too: write `$x$`, not x. This covers fractions, exponents, roots, integrals, sums, limits, matrices, vectors, Greek letters, inequalities, set and logic symbols, units with powers (`$\mathrm{m/s^2}$`) and chemical formulas (`$\mathrm{H_2O}$`).
+   - Never use plain-text pseudo-math such as `x^2`, `sqrt(x)`, `d/dx`, `>=`, `->` or "integral of". Ordinary numbers and everyday words stay normal text.
+   - Don't put math in code blocks or backticks. They show the raw source instead of rendering it.
+   - Worked solutions: one step per line inside `$$ \begin{aligned} ... \end{aligned} $$`, with a few words on what changed in each step.
+   - Where LaTeX won't render, use real Unicode symbols instead (x², √x, π, ≤, ∫, →, H₂O): quiz cards and flashcards, widget labels (HTML `<sup>` and `<sub>`, or KaTeX from cdnjs.cloudflare.com if the Visualizer allows scripts), Google Sheets cells, Google Docs (lesson notes and reference docs), and check-in messages.
+   - If the student says equations show up as raw `$` signs, tell them to turn on LaTeX rendering in claude.ai's settings, use Unicode until they have, and note it in NOTES.md.
 
 Session "next lesson":
 1. Pace check: read the Dashboard and the last Check-ins row. If behind, follow that plan.
@@ -201,7 +209,7 @@ By day: Monday = week plan Mon-Sun + 2-3 tips; Wednesday = progress vs plan, wha
 
 Tips must name the actual upcoming lessons and weak topics. End with: open the <Course> project in Claude and say "next lesson" (or "catch-up", "quiz me").
 
-Format: ONE SendUserMessage, phone-length markdown: bold line "<COURSE> · {Day Mon d} · {On track | Behind by N lessons} · {D} days to final", a text progress bar "Lessons ■■■□□□ 3/13 (due by today: 4)", the plan list, Tips, Start line.
+Format: ONE SendUserMessage, phone-length markdown: bold line "<COURSE> · {Day Mon d} · {On track | Behind by N lessons} · {D} days to final", a text progress bar "Lessons ■■■□□□ 3/13 (due by today: 4)", the plan list, Tips, Start line. Write any symbols in plain Unicode (x², √, π), not LaTeX: a phone notification won't render it.
 Then append a row to Check-ins: date, day, pace, "done / due", one-line plan summary.
 If the sheet can't be read, send only a short message saying the progress sheet couldn't be read, to turn the Google Sheets connector back on, and the current block's lessons and end date.
 Final reply after tools: one short line or empty.

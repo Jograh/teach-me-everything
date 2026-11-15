@@ -73,6 +73,10 @@ The full tutor loop, logging rules and session types live in the `TEACHING-METHO
 
 Mission first, trusted sources only, one small idea per lesson, no skipped checks, retrieval practice, spaced repetition, interleaving and learning records. Adapted from Matt Pocock's `/teach` skill.
 
+## Math and symbols
+
+In chat, equations and symbols are written as LaTeX (`$x^2$`, `$$...$$`), so they render as real math instead of plain text like `x^2`. Places that can't render LaTeX (quiz cards, flashcards, Sheets cells, Docs, phone check-ins) get real Unicode symbols (x², √, π, ≤) instead. If equations show up as raw `$` signs, turn on LaTeX rendering in claude.ai's settings. The rule is ground rule 7 in the `TEACHING-METHOD` template.
+
 ## Customizing
 
 All the behavior lives in `SKILL.md`. Common tweaks:

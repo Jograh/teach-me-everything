@@ -19,7 +19,7 @@ Give it your course materials and your exam date. It builds you a study plan, te
 ## What you get
 
 - **A study plan built around your exam date.** Tell it when your final is and what grade you're aiming for. It works backward and gives you a day-by-day plan. It rebuilds the plan if you fall behind.
-- **Lessons you can see and play with.** Diagrams, sliders you can drag, quiz cards and flashcards, all right inside the chat. Nothing to download or open.
+- **Lessons you can see and play with.** Diagrams, sliders you can drag, quiz cards and flashcards, all right inside the chat. Equations and symbols show up as real math, not plain text. Nothing to download or open.
 - **Teaching that sticks.** It teaches one topic at a time, quizzes you, and brings old topics back for review right before you'd forget them.
 - **It remembers what you struggle with.** Every mistake gets saved: your score, a note about what you mixed up, and a log of the session. Anything you scored low on comes back the next day, and your next warm-up goes straight at what you got wrong.
 - **A progress tracker.** A Google Sheet keeps your scores, what's due for review, and whether you're on pace.
