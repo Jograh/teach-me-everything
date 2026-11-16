@@ -82,7 +82,7 @@ If a Google Workspace skill is available, load it (and its Sheets reference) bef
 
 **Topics** (A:K): Topic ID | Lesson | Topic | Status | First studied | Last reviewed | Times reviewed | Last score | Confidence (1-5) | Next review | Misconceptions to watch
 - Prefix topic IDs with `'` so they stay text (`'1.3.4`).
-- Status starts as "Not started" and Times reviewed as 0.
+- Status starts as "Not started" and Times reviewed as 0. Topics with nothing to check (intro and conclusion videos) get the status "No check" once covered, with score, confidence and review dates left blank.
 - J2 holds the spaced-review formula: `=IF(F2="","",F2+IF(AND(H2<>"",H2<0.7),1,CHOOSE(MIN(MAX(G2,1),4),1,3,7,14)))`. Fill it down with `copyPaste` `PASTE_FORMULA`.
 
 **Session Log** (A:F): Date | Type | Lessons / topics | Score | Mistakes and misconceptions | Next step
@@ -111,14 +111,18 @@ If a Google Workspace skill is available, load it (and its Sheets reference) bef
 | 13 | Topics due for review | `=COUNTIF(Topics!J2:JN,"<="&B3)` |
 | 14 | Average topic score | `=IFERROR(AVERAGE(Topics!H2:HN),"No scores yet")` |
 | 15 | Weighted grade so far | `=Assessments!B<avg row>` |
+| 16 | Topics left in current block | `=IF(ISNUMBER(B11),SUMPRODUCT((Lessons!E2:EL<=B11)*(Lessons!I2:IL-Lessons!H2:HL)),"")` |
+| 17 | Topics per day needed | `=IF(ISNUMBER(B11),ROUNDUP(B16/MAX(1,B11-B3+1),0),"")` |
+
+Row 16 sums topics total minus topics studied for every lesson due on or before the current block's end. Row 17 divides that by the days left in the block, counting today. "Pace" only turns to "Behind" after a due date has passed, so these two rows are the early warning.
 
 6. **Formatting**, in one `update_spreadsheet` batch (one set of requests per tab, merged).
    - Headers: bold white text on `#1F3864`. Freeze row 1 and set column widths.
    - Number formats: dates `ddd mmm d` on Timeline and Lessons due dates, `yyyy-mm-dd` elsewhere; scores `0%`; weights `0%`.
-   - **Set `0` as the number format on Dashboard B5:B8 and B13.** Otherwise "Days until final" inherits a date format and shows `1900-02-02`.
+   - **Set `0` as the number format on Dashboard B5:B8, B13 and B16:B17.** Otherwise "Days until final" inherits a date format and shows `1900-02-02`.
    - Dropdowns (`setDataValidation` with `ONE_OF_LIST`):
      - Lessons Status: Not started, In progress, Done
-     - Topics Status: Not started, Learning, Reviewing, Mastered
+     - Topics Status: Not started, No check, Learning, Reviewing, Mastered
      - Session Log Type: Lesson, Review, Practice quiz, Catch-up, Mock exam
      - Assessments Status: Upcoming, Done, Missed
    - Conditional formats (leave out the `index` field):
@@ -138,7 +142,7 @@ Write them with the Projects tool (`project_write`). Bare names land in `claude/
   - a table of lessons with topic IDs, readings and due dates
   - the timeline table
   - the grading breakdown and assessment formats
-- **TEACHING-METHOD.md**: the session rules below, filled in with the course's paths, IDs, check-in schedule and exam format.
+- **TEACHING-METHOD.md**: the session rules below, filled in with the course's paths, IDs, check-in schedule and exam format. Include a column map for the sheet (tab, column letter, field) and the exact ranges to read at session start and write at session end, so no session has to rediscover the layout. A session start should need only this doc, NOTES.md and the sheet ranges; MISSION, COURSE-MAP and VISUAL-KIT are read when needed. Its first line tells any chat in the Project to read it before teaching, in case the Project instruction was never pasted.
 - **NOTES.md**: the student's preferences (see above), plus a line for each time they correct the teaching.
 - **VISUAL-KIT.md**: house style for the Visualizer plus a recipe table with one row per concept that has a control (a slider or toggle), for example seasons tilt, Kepler orbits, supply and demand shifts, probability distributions, matrix transforms. Add a row whenever a visual works well. Also record how math is written inside widgets (see ground rule 7 of the TEACHING-METHOD template).
 
@@ -146,10 +150,10 @@ Write them with the Projects tool (`project_write`). Bare names land in `claude/
 
 Ground rules:
 1. Teach only from the course sources (transcripts or slides, and the textbook). Cite a topic ID or section. Flag anything beyond the course and follow the course.
-2. Read the transcript before teaching a topic: stage it from the device and extract it. If the device is offline, ask for the file; never teach from memory.
+2. Read the transcript before teaching a topic: extract it in place with `device_bash` and `pdftotext -layout` (stage the file only when there is no device shell). At the start of a lesson, extract all of that lesson's transcripts in one command. If the device is offline, ask for the file; never teach from memory.
 3. One topic per step. Never dump a whole lesson.
 4. No skipped checks.
-5. Visuals are native: the Visualizer (`show_widget`, after `read_me`) and the quiz card (`quiz_display_v0`). Every visual must add something the text doesn't say.
+5. Visuals are native: the Visualizer (`show_widget`, after `read_me`) and the quiz card (`quiz_display_v0`). Every visual must add something the text doesn't say. Don't put click-to-ask (`sendPrompt`) nodes on a visual shown in the same message as a check.
 6. Keep it concise.
 7. Math and symbols render as math, not plain text.
    - In chat, write every equation, formula and symbol in LaTeX markdown: inline `$...$`, and standalone equations on their own lines in `$$...$$`. A variable that stands for a quantity is math too: write `$x$`, not x. This covers fractions, exponents, roots, integrals, sums, limits, matrices, vectors, Greek letters, inequalities, set and logic symbols, units with powers (`$\mathrm{m/s^2}$`) and chemical formulas (`$\mathrm{H_2O}$`).
@@ -158,26 +162,36 @@ Ground rules:
    - Worked solutions: one step per line inside `$$ \begin{aligned} ... \end{aligned} $$`, with a few words on what changed in each step.
    - Where LaTeX won't render, use real Unicode symbols instead (x², √x, π, ≤, ∫, →, H₂O): quiz cards and flashcards, widget labels (HTML `<sup>` and `<sub>`, or KaTeX from cdnjs.cloudflare.com if the Visualizer allows scripts), Google Sheets cells, Google Docs (lesson notes and reference docs), and check-in messages.
    - If the student says equations show up as raw `$` signs, tell them to turn on LaTeX rendering in claude.ai's settings, use Unicode until they have, and note it in NOTES.md.
+8. Grade against the whole course, not only the current transcript. A statement that is correct and within the textbook or a later lesson is neutral: no credit, no penalty. Before calling something "not in the course", search the textbook text or the later transcripts. Penalise only statements that are wrong.
 
 Session "next lesson":
-1. Pace check: read the Dashboard and the last Check-ins row. If behind, follow that plan.
-2. Warm-up: 3-5 interleaved questions on topics due for review.
+1. Pace check: read the Dashboard and the last Check-ins row. Always state "Topics left in current block" and "Topics per day needed", even when Pace reads "On track". Ask how much time the student has and plan the session's topics to fit it. If behind, follow that plan.
+2. Warm-up: 3-5 interleaved questions on topics due for review. Ask at least 2 questions on any topic whose status could change, and re-ask any short answer the student skipped last session.
 3. Hook: the transcript's opening questions. Ask the student to guess first.
 4. Teach: 3-6 short paragraphs, one visual, one concrete example, and the misconception the transcript flags.
 5. Check: 3-4 MCQs (equal length, rotate the correct position) and one "explain in 2 sentences" question, graded like a TA (wrong statements lose credit when the course grades that way). Show the model answer.
+   - The quiz card does not report scores back. Ask for one reply in this shape: `3/4, missed 2` followed by the short answer. Shorthand answers are fine. If part is missing, ask once, then score what is there and move on.
+   - Scoring is fixed: each MCQ is 1 point, the short answer is 2 points (2 = complete and correct, 1 = right idea but missing the mechanism or vague, 0 = wrong or off-topic; subtract 0.5 per wrong statement, minimum 0). Topic score = points earned / points possible.
+   - A skipped short answer is left out of the score, noted as "SA owed" in the topic's Misconceptions cell, and asked again in the next warm-up.
 6. Repeat steps 3-5 for each topic.
-7. Log.
+7. Log once, at the end of the lesson or when the student stops (see Logging). Ask for confidence once per lesson, as one list of topics, not after every topic.
 
 Other session types:
 - **"Quiz me" / "review"**: 10-15 interleaved questions on due and weakest topics.
+- **Voice sessions** (the student is talking, not typing, or visuals and tools aren't available on the call): ask one hook question at a time. MCQs have 3 short options, read once in full; never change a question when repeating it. Skip visuals and say they'll come in text. Teach only topics whose transcript was read before the call; if the next one can't be read, stop and say so. Keep a running tally of scores and misconceptions, and log everything as soon as the session is back in text, then show the visuals that were skipped.
 - **"Catch-up"**: per topic, the hook, the core idea, a visual and 2 MCQs. Topics stay at Learning status.
 - **Review passes / mock exams**: match the final's format, re-teach anything under 70%, and use flashcards (`initial_mode: "flashcards"`) for glossary drills.
 
-Logging (every session):
-- **Topics tab**: Status (<70% Learning, 70-89% Reviewing, >=90% on a repeat review Mastered), First studied, Last reviewed, Times reviewed +1, Last score as a fraction, Confidence (ask), Misconceptions. Never overwrite the Next review formula.
+Logging (every session; read the sheet once at the start, write once per tab at the end of each lesson or when the student stops, never after each topic):
+- **Topics tab**: Status, First studied, Last reviewed, Times reviewed +1, Last score as a fraction, Confidence (ask once per lesson), Misconceptions. Never overwrite the Next review formula.
+  - Status on first study: under 70% Learning, 70% or more Reviewing (never Mastered on first study).
+  - Status on a review: a review counts only if the topic got at least 2 questions. Under 70% Learning, 70-89% Reviewing, 90% or more Mastered. With fewer than 2 questions, update Last reviewed and Times reviewed but leave Status and Last score alone.
+  - Intro and conclusion videos: "No check".
 - **Lessons tab**: Status Done, date, Mastery, notes doc link.
 - **Session Log**: append one row.
 - **Assessments**: update when the student reports a score or a date.
+- **NOTES.md**: add a line whenever the student corrects the teaching, asks for something later ("review Moon phases again") or changes how they want sessions run (voice, shorter checks).
+- **VISUAL-KIT.md**: add a row for each visual that worked this session (concept, control, what it showed).
 
 Saved material (Drive, only things worth rereading):
 - **Lesson notes**: one Google Doc per finished lesson in `Lesson Notes/`, named "L04 - Title". Contents: key ideas per topic, key terms, misconceptions hit, 5 self-test questions with answers at the end, readings.
@@ -197,7 +211,7 @@ Saved material (Drive, only things worth rereading):
 ```
 You are <NAME>'s study accountability coach for <COURSE> (<course name>, <term>). This runs <days> mornings (<time zone>). Tell them exactly what they have to get done, check whether they are on pace with their timeline, and if they are behind, give a concrete catch-up plan that gets them back on it. Direct and specific, never preachy.
 
-Data (only source of truth): Google Sheet "<COURSE> Progress", ID <id>. Read with get_values: Dashboard!A1:B15, Timeline!A1:G<k>, Lessons!A1:L<L>, Topics!A1:K<N>, Check-ins!A:E (last 2 rows, don't repeat yourself), Assessments!A1:F<r>. Use only numbers from the sheet. Get today's date in <time zone> first.
+Data (only source of truth): Google Sheet "<COURSE> Progress", ID <id>. Read with get_values: Dashboard!A1:B17, Timeline!A1:G<k>, Lessons!A1:L<L>, Topics!A1:K<N>, Check-ins!A:E (last 2 rows, don't repeat yourself), Assessments!A1:F<r>. Use only numbers from the sheet. Get today's date in <time zone> first.
 
 Timeline (the tab wins if it differs): <blocks with dates>. FINAL: <date, time, room, format, weight>.
 
@@ -220,7 +234,7 @@ Final reply after tools: one short line or empty.
 ## Phase 6: Verify and hand off
 
 - Run `get_values` on every tab. Check there are no `#` errors, the Dashboard is sensible, and the formulas filled down.
-- The Project lists all 5 docs.
+- The Project lists all 5 docs (`project_info`). If its `instructions` field is empty, remind the student once to paste the one-line instruction.
 - The scheduled task shows the right cron and next run time.
 - Send the student links to the sheet and folder in the sentence that names them, the first check-in time, the one-line Project instruction to paste, and how to start ("next lesson").
 
@@ -233,3 +247,7 @@ Final reply after tools: one short line or empty.
 - A 600 MB+ textbook may be cloud-only on the device. Tell the student before downloading it, or ask them to download it locally first.
 - Project docs written with bare names go to `claude/<name>`. Rewriting a doc replaces it whole, so send the full content.
 - The check-in prompt must carry every ID and date it needs. It cannot see the setup chat.
+- The quiz card never reports a score to the tutor. Plan for the student to type it.
+- "On track" lags: it only turns to "Behind" after a due date passes. Use the topics-per-day rows for pacing.
+- Some sessions happen by voice, where there are no visuals, quiz cards or tools.
+- Transcripts contain errors (an old instructor's name, a misspelled star or person). Follow the outline and textbook and tell the student about the mismatch.

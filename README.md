@@ -22,7 +22,7 @@ Give it your course materials and your exam date. It builds you a study plan, te
 - **Lessons you can see and play with.** Diagrams, sliders you can drag, quiz cards and flashcards, all right inside the chat. Equations and symbols show up as real math, not plain text. Nothing to download or open.
 - **Teaching that sticks.** It teaches one topic at a time, quizzes you, and brings old topics back for review right before you'd forget them.
 - **It remembers what you struggle with.** Every mistake gets saved: your score, a note about what you mixed up, and a log of the session. Anything you scored low on comes back the next day, and your next warm-up goes straight at what you got wrong.
-- **A progress tracker.** A Google Sheet keeps your scores, what's due for review, and whether you're on pace.
+- **A progress tracker.** A Google Sheet keeps your scores, what's due for review, whether you're on pace, and how many topics a day you need to stay on it.
 - **Check-ins (optional).** Get a scheduled message a few mornings a week telling you if you're on track, and what to do if you're not. Sign in to the Claude app on your phone and they arrive as notifications, which is the most convenient way to get them.
 
 It teaches only from *your* course materials (syllabus, slides, textbook), so you're studying what your class actually covers.

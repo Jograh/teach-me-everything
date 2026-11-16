@@ -20,7 +20,7 @@ Given your syllabus and lesson files, the skill builds:
 
 - **A tutor** that teaches only from your course materials, one topic at a time, with inline diagrams, interactive simulations and quizzes. It never skips the comprehension check.
 - **A study timeline you control.** Set the final date, quiz dates and target grade, or bring an existing plan (PDF, calendar, list). It schedules lessons backward from your exam and rebuilds the plan when you fall behind.
-- **A Google Sheet progress tracker** with a dashboard (pace, days to the final, topics due for review), lessons, topics with spaced-repetition review dates, a session log and grade tracking.
+- **A Google Sheet progress tracker** with a dashboard (pace, days to the final, topics left in the current block and topics per day needed, topics due for review), lessons, topics with spaced-repetition review dates, a session log and grade tracking.
 - **A Google Drive folder** for lesson notes and reference docs (glossary, cheat sheet, final review).
 - **Optional check-ins** on a schedule, e.g. Mon/Wed/Sat mornings. Each one reads your sheet, tells you whether you're on pace, and gives you a day-by-day catch-up plan when you're behind.
 
@@ -50,13 +50,15 @@ Alternatively, paste the repo link into a chat inside the course's Project and a
 
 ```
 "next lesson"
-  → pace check (dashboard)
+  → pace check (dashboard), then asks how much time you have and fits the session to it
   → warm-up: 3–5 review questions on due topics
   → per topic: hook → short lesson + visual → MCQs + explain-it check
-  → log scores to the sheet → spaced review date updates itself
+  → log once at the end of the lesson → spaced review date updates itself
 ```
 
-Other commands: `quiz me`, `review`, `catch-up`.
+Other commands: `quiz me`, `review`, `catch-up`. Sessions by voice are supported too: one question at a time, no visuals, and everything is logged once you're back in text.
+
+Scoring is fixed so scores are comparable between sessions: each MCQ is 1 point and the short answer is 2. The quiz card can't report scores back, so you reply once with something like `3/4, missed 2` plus your short answer. Answers are graded against the whole course (textbook and later lessons), not just the current transcript.
 
 The full tutor loop, logging rules and session types live in the `TEACHING-METHOD` template inside [`SKILL.md`](skills/course-tutor-setup/SKILL.md).
 
@@ -82,7 +84,8 @@ In chat, equations and symbols are written as LaTeX (`$x^2$`, `$$...$$`), so the
 All the behavior lives in `SKILL.md`. Common tweaks:
 
 - **Review intervals:** the `CHOOSE(...,1,3,7,14)` formula in the Topics tab (days until the next review)
-- **Mastery thresholds:** 70% / 90% in the logging rules
+- **Mastery thresholds:** 70% / 90% in the logging rules (a review only counts if the topic got at least 2 questions)
+- **Scoring rubric:** step 5 of the "next lesson" session
 - **Check-in format:** the prompt template in Phase 5
 
 ## Skill phases
